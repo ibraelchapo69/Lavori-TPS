@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Generatore Numeri in Griglia Ordinata</title>
+
+<style>
+body {
+font-family: Arial, sans-serif;
+background: #f4f4f9;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: flex-start;
+min-height: 100vh;
+margin: 0;
+padding: 20px;
+}
+
+button {
+background: #007bff;
+color: white;
+border: none;
+border-radius: 8px;
+padding: 10px 20px;
+font-size: 16px;
+cursor: pointer;
+transition: 0.2s;
+}
+
+button:hover {
+background: #0056b3;
+transform: scale(1.03);
+}
+
+h1 {
+margin-bottom: 20px;
+}
+
+h2, h3 {
+margin-bottom: 5px;
+}
+
+#vettore, #griglia {
+display: grid;
+grid-template-columns: repeat(10, 1fr);
+gap: 6px;
+background: #ffffff;
+padding: 15px;
+border-radius: 12px;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+margin-top: 10px;
+width: 90%;
+max-width: 900px;
+text-align: center;
+font-family: monospace;
+font-size: 14px;
+line-height: 1.8;
+word-wrap: break-word;
+}
+
+
+#vettore span, #griglia span {
+display: inline-block;
+padding: 6px 8px;
+border: 1px solid #ddd;
+border-radius: 6px;
+background: #f0f4f8;
+transition: 0.2s;
+}
+
+#vettore span:hover, #griglia span:hover {
+background: #dbe9ff;
+transform: scale(1.05);
+}
+
+
+#vettore span.alta, #griglia span.alta {
+background: #c8e6c9;
+border-color: #8bc34a;
+}
+
+#vettore span.negativo {
+background: #ffccbc;
+border-color: #ff5722;
+}
+
+
+.stats {
+background: #fff;
+padding: 10px 20px;
+border-radius: 10px;
+box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+<h1>Generatore di Numeri Casuali</h1>
+
+<button type="button" onclick="generaNumeri()">Genera Numeri</button>
+
+<div class="stats">
+<h2>Statistiche</h2>
+<p><strong>Media:</strong> <span id="media"></span></p>
+<p><strong>Massimo:</strong> <span id="max"></span></p>
+<p><strong>Minimo:</strong> <span id="min"></span></p>
+</div>
+
+<h3>Vettore completo:</h3>
+<div id="vettore"></div>
+
+<h3>Numeri > 50:</h3>
+<div id="griglia"></div>
+
+<script src="codice.js"></script>
+</body>
+</html>
