@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anagrafica Generazionale</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #74ABE2, #5563DE);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 30px;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    form {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      padding: 30px 40px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 600px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 8px;
+      margin-top: 15px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: 0.2s;
+    }
+
+    .radio-group,
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 8px;
+    }
+
+    button {
+      margin-top: 25px;
+      width: 100%;
+      padding: 12px;
+      background: #5563DE;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #3a47c1;
+    }
+
+    #output {
+      background: white;
+      border-radius: 12px;
+      padding: 25px 30px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      max-width: 500px;
+      width: 100%;
+      color: #333;
+    }
+
+    #output h2 {
+      text-align: center;
+      margin-bottom: 15px;
+      color: #222;
+    }
+
+    #output p {
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <form id="anagraficaForm">
+    <h1>Anagrafica Generazionale</h1>
+
+    <label for="nome">Nome</label>
+    <input type="text" id="nome" name="nome" required>
+
+    <label for="cognome">Cognome</label>
+    <input type="text" id="cognome" name="cognome" required>
+
+    <label for="indirizzo">Indirizzo</label>
+    <input type="text" id="indirizzo" name="indirizzo">
+
+    <label for="citta">Città</label>
+    <input type="text" id="citta" name="citta">
+
+    <label for="cap">CAP</label>
+    <input type="text" id="cap" name="cap">
+
+    <label for="eta">Età</label>
+    <input type="number" id="eta" name="eta" placeholder="Età attuale">
+
+    <label for="dataNascita">Data di nascita</label>
+    <input type="date" id="dataNascita" name="dataNascita">
+
+    <label>Sesso</label>
+    <div class="radio-group">
+      <label><input type="radio" name="sesso" value="M"> M</label>
+      <label><input type="radio" name="sesso" value="F"> F</label>
+      <label><input type="radio" name="sesso" value="Altro"> Altro</label>
+    </div>
+
+    <label for="provincia">Provincia</label>
+    <select id="provincia" name="provincia">
+      <option value="">-- Seleziona la provincia --</option>
+      <option>RM - Roma</option>
+      <option>MI - Milano</option>
+      <option>NA - Napoli</option>
+      <option>TO - Torino</option>
+      <option>FI - Firenze</option>
+      <option>VE - Venezia</option>
+      <option>BA - Bari</option>
+    </select>
+
+    <label>Mezzi di locomozione posseduti in famiglia</label>
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="mezzi" value="Auto"> Auto</label>
+      <label><input type="checkbox" name="mezzi" value="Moto"> Moto</label>
+      <label><input type="checkbox" name="mezzi" value="Bici"> Bici</label>
+      <label><input type="checkbox" name="mezzi" value="Aereo"> Aereo</label>
+      <label><input type="checkbox" name="mezzi" value="Yacht"> Yacht</label>
+    </div>
+
+    <label for="materie">Materie di insegnamento preferite (max 3)</label>
+    <select id="materie" name="materie" multiple>
+      <option>Matematica</option>
+      <option>Italiano</option>
+      <option>Inglese</option>
+      <option>Scienze</option>
+      <option>Storia</option>
+      <option>Geografia</option>
+      <option>Arte</option>
+      <option>Educazione fisica</option>
+      <option>Musica</option>
+    </select>
+
+    <input type="button" value="Invia dati" onclick="stampa()">
+  </form>
+
+  <div id="output">
+    <h2>Dati Inseriti</h2>
+    <p>Compila il modulo e premi "Invia dati" per vedere il riepilogo qui.</p>
+  </div>
+<script src="script.js"></script>
+
+</body>
+</html>
