@@ -160,7 +160,7 @@ function perfezionaAcquisto() {
         return;
     }
 
-    // Funzione interna per mappare i caratteri UTF-8 accentati nei codici compatibili con jsPDF standard
+    // Mappatura sicura dei caratteri accentati per i font nativi di jsPDF
     function sistemaAccenti(stringa) {
         if (!stringa) return "";
         return stringa
@@ -181,19 +181,22 @@ function perfezionaAcquisto() {
     }
 
     var doc = new jsPDF();
+    
+    // Titolo Principale
     doc.setFontSize(22);
     doc.setTextColor(59, 130, 246);
     doc.text("Riepilogo Ordine - IbraShop", 15, 20);
 
+    // Sezione Cliente
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(14);
     doc.text("Dati Cliente:", 15, 35);
 
     doc.setFontSize(12);
-    // Applichiamo la correzione al nome dell'utente
     doc.text("Nome: " + sistemaAccenti(utenteNome), 15, 45);
     doc.text("Email: " + utenteEmail, 15, 52);
 
+    // Sezione Prodotti
     doc.setFontSize(14);
     doc.text("Prodotti Acquistati:", 15, 70);
 
@@ -223,11 +226,11 @@ function perfezionaAcquisto() {
         if (!priceVal) { priceVal = 0; }
         total = total + priceVal;
 
-        // Puliamo sia il titolo che la categoria prima di formare la riga di testo
         var titoloPulito = sistemaAccenti(title);
         var categoriaPulita = sistemaAccenti(cat).toUpperCase();
 
-        var lineItem = (i + 1) + ". [" + categoriaPulita + "] " + titoloPulito + " - \u20AC" + priceVal.toFixed(2);
+        // Usiamo \x80 che corrisponde al simbolo dell'Euro nativo in jsPDF
+        var lineItem = (i + 1) + ". [" + categoriaPulita + "] " + titoloPulito + " - \x80 " + priceVal.toFixed(2);
         doc.text(lineItem, 15, y);
         y = y + 8;
 
@@ -237,17 +240,27 @@ function perfezionaAcquisto() {
         }
     }
 
+    // Totale Finale
     y = y + 10;
     doc.setFontSize(16);
     doc.setTextColor(16, 185, 129);
-    doc.text("Totale Pagato: \u20AC" + total.toFixed(2), 15, y);
+    // Usiamo \x80 anche qui per garantire coerenza grafica
+    doc.text("Totale Pagato: \x80 " + total.toFixed(2), 15, y);
 
+    // Salvataggio PDF
     doc.save("Riepilogo_Acquisto_IbraShop.pdf");
 
+    // Reset dello stato del carrello nell'interfaccia
     carrello = [];
-    document.getElementById("cart-count").textContent = "0";
+    var cartCountEl = document.getElementById("cart-count");
+    if (cartCountEl) {
+        cartCountEl.textContent = "0";
+    } else {
+        var cartCounterEl = document.getElementById("cart-counter");
+        if (cartCounterEl) cartCounterEl.textContent = "0";
+    }
+    
     alert("Acquisto perfezionato con successo!");
-
     tornaAlCatalogo();
 }
 renderCart();
