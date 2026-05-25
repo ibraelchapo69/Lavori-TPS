@@ -160,24 +160,25 @@ function perfezionaAcquisto() {
         return;
     }
 
-    // Mappatura sicura dei caratteri accentati per i font nativi di jsPDF
+    // Convertiamo tutto in ASCII standard per impedire a jsPDF di attivare la modalità Unicode (causa del þÿ)
     function sistemaAccenti(stringa) {
         if (!stringa) return "";
         return stringa
-            .replace(/à/g, "\xE0")
-            .replace(/á/g, "\xE1")
-            .replace(/è/g, "\xE8")
-            .replace(/é/g, "\xE9")
-            .replace(/ì/g, "\xEC")
-            .replace(/í/g, "\xED")
-            .replace(/ò/g, "\xF2")
-            .replace(/ó/g, "\xF3")
-            .replace(/ù/g, "\xF9")
-            .replace(/ú/g, "\xFA")
+            .replace(/à/g, "a'")
+            .replace(/á/g, "a'")
+            .replace(/è/g, "e'")
+            .replace(/é/g, "e'")
+            .replace(/ì/g, "i'")
+            .replace(/í/g, "i'")
+            .replace(/ò/g, "o'")
+            .replace(/ó/g, "o'")
+            .replace(/ù/g, "u'")
+            .replace(/ú/g, "u'")
             .replace(/È/g, "E'")
             .replace(/“/g, '"')
             .replace(/”/g, '"')
-            .replace(/’/g, "'");
+            .replace(/’/g, "'")
+            .replace(/€/g, "EUR"); // Previene l'errore se l'utente incolla un simbolo euro nel form
     }
 
     var doc = new jsPDF();
@@ -229,8 +230,8 @@ function perfezionaAcquisto() {
         var titoloPulito = sistemaAccenti(title);
         var categoriaPulita = sistemaAccenti(cat).toUpperCase();
 
-        // Usiamo \x80 che corrisponde al simbolo dell'Euro nativo in jsPDF
-        var lineItem = (i + 1) + ". [" + categoriaPulita + "] " + titoloPulito + " - \x80 " + priceVal.toFixed(2);
+        // Usiamo "EUR" al posto del simbolo grafico per garantire compatibilità al 100%
+        var lineItem = (i + 1) + ". [" + categoriaPulita + "] " + titoloPulito + " - EUR " + priceVal.toFixed(2);
         doc.text(lineItem, 15, y);
         y = y + 8;
 
@@ -244,8 +245,8 @@ function perfezionaAcquisto() {
     y = y + 10;
     doc.setFontSize(16);
     doc.setTextColor(16, 185, 129);
-    // Usiamo \x80 anche qui per garantire coerenza grafica
-    doc.text("Totale Pagato: \x80 " + total.toFixed(2), 15, y);
+    // Scrittura testuale pulita del totale
+    doc.text("Totale Pagato: EUR " + total.toFixed(2), 15, y);
 
     // Salvataggio PDF
     doc.save("Riepilogo_Acquisto_IbraShop.pdf");
