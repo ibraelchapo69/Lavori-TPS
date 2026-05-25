@@ -160,17 +160,38 @@ function perfezionaAcquisto() {
         return;
     }
 
+    // Funzione interna per mappare i caratteri UTF-8 accentati nei codici compatibili con jsPDF standard
+    function sistemaAccenti(stringa) {
+        if (!stringa) return "";
+        return stringa
+            .replace(/à/g, "\xE0")
+            .replace(/á/g, "\xE1")
+            .replace(/è/g, "\xE8")
+            .replace(/é/g, "\xE9")
+            .replace(/ì/g, "\xEC")
+            .replace(/í/g, "\xED")
+            .replace(/ò/g, "\xF2")
+            .replace(/ó/g, "\xF3")
+            .replace(/ù/g, "\xF9")
+            .replace(/ú/g, "\xFA")
+            .replace(/È/g, "E'")
+            .replace(/“/g, '"')
+            .replace(/”/g, '"')
+            .replace(/’/g, "'");
+    }
+
     var doc = new jsPDF();
     doc.setFontSize(22);
     doc.setTextColor(59, 130, 246);
-    doc.text("Riepilogo Ordine - ShopPremium", 15, 20);
+    doc.text("Riepilogo Ordine - IbraShop", 15, 20);
 
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(14);
     doc.text("Dati Cliente:", 15, 35);
 
     doc.setFontSize(12);
-    doc.text("Nome: " + utenteNome, 15, 45);
+    // Applichiamo la correzione al nome dell'utente
+    doc.text("Nome: " + sistemaAccenti(utenteNome), 15, 45);
     doc.text("Email: " + utenteEmail, 15, 52);
 
     doc.setFontSize(14);
@@ -202,7 +223,11 @@ function perfezionaAcquisto() {
         if (!priceVal) { priceVal = 0; }
         total = total + priceVal;
 
-        var lineItem = (i + 1) + ". [" + cat.toUpperCase() + "] " + title + " - €" + priceVal;
+        // Puliamo sia il titolo che la categoria prima di formare la riga di testo
+        var titoloPulito = sistemaAccenti(title);
+        var categoriaPulita = sistemaAccenti(cat).toUpperCase();
+
+        var lineItem = (i + 1) + ". [" + categoriaPulita + "] " + titoloPulito + " - \u20AC" + priceVal.toFixed(2);
         doc.text(lineItem, 15, y);
         y = y + 8;
 
@@ -215,9 +240,9 @@ function perfezionaAcquisto() {
     y = y + 10;
     doc.setFontSize(16);
     doc.setTextColor(16, 185, 129);
-    doc.text("Totale Pagato: €" + total, 15, y);
+    doc.text("Totale Pagato: \u20AC" + total.toFixed(2), 15, y);
 
-    doc.save("Riepilogo_Acquisto_ShopPremium.pdf");
+    doc.save("Riepilogo_Acquisto_IbraShop.pdf");
 
     carrello = [];
     document.getElementById("cart-count").textContent = "0";
@@ -225,5 +250,4 @@ function perfezionaAcquisto() {
 
     tornaAlCatalogo();
 }
-
 renderCart();
