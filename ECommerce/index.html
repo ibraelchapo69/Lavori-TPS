@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="glass-header fade-in">
+        <div class="logo">ShopPremium</div>
+    </header>
+
+    <main>
+        <section id="registration-section" class="glass-card fade-in">
+            <h2>Registrazione Cliente</h2>
+            <p>Inserisci i tuoi dati anagrafici per proseguire agli acquisti.</p>
+            <form id="registration-form">
+                <div class="input-group">
+                    <label for="reg-name">Nome Completo</label>
+                    <input type="text" id="reg-name" placeholder="Es. Mario Rossi">
+                </div>
+                <div class="input-group">
+                    <label for="reg-email">Email</label>
+                    <input type="email" id="reg-email" placeholder="Es. mario.rossi@email.com">
+                </div>
+                <button type="button" class="btn-primary" onclick="salvaRegistrazione()">Registrati e Continua</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="login.js"></script>
+</body>
+
+</html>

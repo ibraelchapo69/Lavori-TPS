@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce - Carica CSV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="glass-header fade-in">
+        <div class="logo">ShopPremium</div>
+    </header>
+
+    <main>
+        <section id="upload-section" class="glass-card fade-in">
+            <h2>Benvenuto, <span id="nome-saluto"></span> - Carica Catalogo Csv</h2>
+            <p>Carica il tuo file CSV per generare dinamicamente i prodotti. Le colonne dovrebbero contenere attributi come: categoria, titolo/modello, prezzo, ecc.</p>
+            <div class="upload-container">
+                <input type="file" id="csv-file" accept=".csv">
+                <label for="csv-file" class="btn-secondary">Scegli File CSV</label>
+                <div id="file-name">Nessun file selezionato</div>
+            </div>
+            <button id="btn-load-csv" class="btn-primary" disabled>Carica Prodotti nel Catalogo</button>
+        </section>
+    </main>
+
+    <script src="upload.js"></script>
+</body>
+</html>

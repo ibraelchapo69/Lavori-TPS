@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce - Carrello</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"
+        integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header class="glass-header fade-in">
+        <div class="logo">ShopPremium</div>
+        <nav>
+            <button onclick="tornaAlCatalogo()">Catalogo Prodotti</button>
+            <button class="active">Carrello (<span id="cart-count">0</span>)</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="cart-section" class="glass-card fade-in">
+            <h2>Il tuo Carrello</h2>
+            <div id="cart-items">
+                <p>Il carrello è vuoto.</p>
+            </div>
+            <div class="cart-summary" id="cart-summary" style="display: none;">
+                <h3>Totale: € <span id="cart-total">0.00</span></h3>
+                <button id="btn-checkout" class="btn-primary" onclick="perfezionaAcquisto()">Perfeziona Acquisto</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="carrello.js"></script>
+</body>
+
+</html>

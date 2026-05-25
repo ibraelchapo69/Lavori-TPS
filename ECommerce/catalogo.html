@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce - Catalogo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="glass-header fade-in">
+        <div class="logo">ShopPremium</div>
+        <nav>
+            <button class="active">Catalogo Prodotti</button>
+            <button onclick="vediCarrello()">Carrello (<span id="cart-count">0</span>)</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="products-section" class="fade-in">
+            <h2>Prodotti Disponibili</h2>
+            <div id="products-grid" class="bento-grid"></div>
+        </section>
+    </main>
+
+    <script src="catalogo.js"></script>
+</body>
+
+</html>
