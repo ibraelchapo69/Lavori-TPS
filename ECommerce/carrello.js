@@ -160,46 +160,51 @@ function perfezionaAcquisto() {
         return;
     }
 
-    // Convertiamo tutto in ASCII standard per impedire a jsPDF di attivare la modalità Unicode (causa del þÿ)
-    function sistemaAccenti(stringa) {
-        if (!stringa) return "";
-        return stringa
-            .replace(/à/g, "a'")
-            .replace(/á/g, "a'")
-            .replace(/è/g, "e'")
-            .replace(/é/g, "e'")
-            .replace(/ì/g, "i'")
-            .replace(/í/g, "i'")
-            .replace(/ò/g, "o'")
-            .replace(/ó/g, "o'")
-            .replace(/ù/g, "u'")
-            .replace(/ú/g, "u'")
+    function soloASCII(str) {
+        if (!str) return "";
+        
+
+        var s = String(str)
+            .replace(/à/g, "a'").replace(/á/g, "a'")
+            .replace(/è/g, "e'").replace(/é/g, "e'")
+            .replace(/ì/g, "i'").replace(/í/g, "i'")
+            .replace(/ò/g, "o'").replace(/ó/g, "o'")
+            .replace(/ù/g, "u'").replace(/ú/g, "u'")
             .replace(/È/g, "E'")
-            .replace(/“/g, '"')
-            .replace(/”/g, '"')
-            .replace(/’/g, "'")
-            .replace(/€/g, "EUR"); // Previene l'errore se l'utente incolla un simbolo euro nel form
+            .replace(/€/g, "EUR")
+            .replace(/“/g, '"').replace(/”/g, '"').replace(/’/g, "'");
+        
+  
+        var out = "";
+        for (var i = 0; i < s.length; i++) {
+            var c = s.charCodeAt(i);
+            if (c >= 32 && c <= 126) {
+                out += s.charAt(i);
+            } else {
+                out += " "; 
+            }
+        }
+        return out.replace(/\s+/g, " ").trim(); 
     }
 
     var doc = new jsPDF();
-    
-    // Titolo Principale
+
     doc.setFontSize(22);
     doc.setTextColor(59, 130, 246);
-    doc.text("Riepilogo Ordine - IbraShop", 15, 20);
+    doc.text(soloASCII("Riepilogo Ordine - IbraShop"), 15, 20);
 
     // Sezione Cliente
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(14);
-    doc.text("Dati Cliente:", 15, 35);
+    doc.text(soloASCII("Dati Cliente:"), 15, 35);
 
     doc.setFontSize(12);
-    doc.text("Nome: " + sistemaAccenti(utenteNome), 15, 45);
-    doc.text("Email: " + utenteEmail, 15, 52);
+    doc.text(soloASCII("Nome: " + utenteNome), 15, 45);
+    doc.text(soloASCII("Email: " + utenteEmail), 15, 52);
 
     // Sezione Prodotti
     doc.setFontSize(14);
-    doc.text("Prodotti Acquistati:", 15, 70);
+    doc.text(soloASCII("Prodotti Acquistati:"), 15, 70);
 
     doc.setFontSize(11);
     var y = 80;
@@ -227,12 +232,8 @@ function perfezionaAcquisto() {
         if (!priceVal) { priceVal = 0; }
         total = total + priceVal;
 
-        var titoloPulito = sistemaAccenti(title);
-        var categoriaPulita = sistemaAccenti(cat).toUpperCase();
-
-        // Usiamo "EUR" al posto del simbolo grafico per garantire compatibilità al 100%
-        var lineItem = (i + 1) + ". [" + categoriaPulita + "] " + titoloPulito + " - EUR " + priceVal.toFixed(2);
-        doc.text(lineItem, 15, y);
+        var rigaProdotto = (i + 1) + ". [" + cat.toUpperCase() + "] " + title + " - EUR " + priceVal.toFixed(2);
+        doc.text(soloASCII(rigaProdotto), 15, y);
         y = y + 8;
 
         if (y > 275) {
@@ -241,17 +242,15 @@ function perfezionaAcquisto() {
         }
     }
 
-    // Totale Finale
+
     y = y + 10;
     doc.setFontSize(16);
     doc.setTextColor(16, 185, 129);
-    // Scrittura testuale pulita del totale
-    doc.text("Totale Pagato: EUR " + total.toFixed(2), 15, y);
+    doc.text(soloASCII("Totale Pagato: EUR " + total.toFixed(2)), 15, y);
 
-    // Salvataggio PDF
+
     doc.save("Riepilogo_Acquisto_IbraShop.pdf");
 
-    // Reset dello stato del carrello nell'interfaccia
     carrello = [];
     var cartCountEl = document.getElementById("cart-count");
     if (cartCountEl) {
